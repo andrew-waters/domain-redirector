@@ -1,0 +1,5 @@
+.terraform
+config/nginx-default.conf
+config/tf.json
+terraform.tfstate.backup
+terraform.tfstate

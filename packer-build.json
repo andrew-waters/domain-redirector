@@ -1,0 +1,36 @@
+{
+    "variables": {
+        "DIGITALOCEAN_API_TOKEN": "",
+        "IMAGE_BUILD_SIZE": "s-1vcpu-1gb",
+        "IMAGE_BASE_IMAGE": "ubuntu-18-04-x64",
+        "IMAGE_REGION": "lon1",
+        "IMAGE_SNAPSHOT_NAME": "domain-redirector"
+    },
+    "builders": [
+        {
+            "type": "digitalocean",
+            "ssh_username": "root",
+            "api_token": "{{ user `DIGITALOCEAN_API_TOKEN` }}",
+            "image": "{{ user `IMAGE_BASE_IMAGE` }}",
+            "region": "{{ user `IMAGE_REGION` }}",
+            "size": "{{ user `IMAGE_BUILD_SIZE` }}",
+            "snapshot_name": "{{ user `IMAGE_SNAPSHOT_NAME` }}"
+        }
+    ],
+    "provisioners": [
+        {
+            "type": "shell",
+            "inline": [
+                "sudo apt-get -y update",
+                "sudo apt-get -y install nginx",
+                "ufw allow 'Nginx HTTP'",
+                "curl -sSL https://agent.digitalocean.com/install.sh | sh"
+            ]
+        },
+        {
+            "type": "file",
+            "source": "config/nginx-default.conf",
+            "destination": "/etc/nginx/sites-available/default"
+        }
+    ]
+}
