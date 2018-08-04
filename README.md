@@ -7,7 +7,7 @@ Domain Redirector gives you a Digital Ocean droplet based on a custom machine im
 Copy the example config files:
 
 ```bash
-cp ./config/nginx-default.conf.tpl ./config/nginx-default.conf
+cp ./config/nginx-default.conf.tpl ./config/nginx-default.conf && \
 cp ./config/tf.json.tpl ./config/tf.json
 ```
 
